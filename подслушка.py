@@ -1,13 +1,20 @@
 import flet as ft
 import datetime
-
+import hashlib
 # --- ИМИТАЦИЯ БАЗЫ ДАННЫХ ---
 # В реальном приложении данные заменяются на запросы к серверу (Firebase/SQL)
 users = {}  # {user_id: {"name": str, "class": str, "is_admin": bool}}
 admin_reports = []  # Список жалоб и фото
 posts =}
 ]
-ADMIN_PASSWORD = "3657" # Пароль, чтобы стать админом (скрытая функция)
+ADMIN_HASH = "8227653c031c51859846c434f59c8a9d" 
+
+def check_pass(e):
+    # Кодируем введенный пароль и сравниваем хеши
+    user_hash = hashlib.md5(pass_input.value.encode()).hexdigest()
+    if user_hash == ADMIN_HASH:
+        user_data["is_admin"] = True
+        show_admin_panel() # Пароль, чтобы стать админом (скрытая функция)
 
 def main(page: ft.Page):
     page.title = "подслушка"
