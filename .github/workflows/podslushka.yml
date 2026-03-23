@@ -16,12 +16,13 @@ jobs:
         run: pip install flet
 
       - name: Prepare main.py
-        # Оставляем твой файл подслушка.py нетронутым
+        # Робот копирует твой файл подслушка.py во временный main.py
         run: cp podslushka.py main.py
 
-      - name: Build APK (Silent Mode)
-        # Флаг --no-interactive запрещает роботу спрашивать "Да/Нет"
-        run: flet build apk --no-interactive
+      - name: Build APK (Auto Yes)
+        # Команда yes | заставляет робота отвечать "Да" на все вопросы
+        run: |
+          yes | flet build apk --product "Подслушка"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
