@@ -1,30 +1,26 @@
 import flet as ft
 import datetime
 import hashlib
-# --- ИМИТАЦИЯ БАЗЫ ДАННЫХ ---
-# В реальном приложении данные заменяются на запросы к серверу (Firebase/SQL)
-users = {}  # {user_id: {"name": str, "class": str, "is_admin": bool}}
-admin_reports = []  # Список жалоб и фото
+
+users = {}
+admin_reports = []
 posts =}
 ]
 ADMIN_HASH = "8227653c031c51859846c434f59c8a9d" 
 
 def check_pass(e):
-    # Кодируем введенный пароль и сравниваем хеши
     user_hash = hashlib.md5(pass_input.value.encode()).hexdigest()
     if user_hash == ADMIN_HASH:
         user_data["is_admin"] = True
-        show_admin_panel() # Пароль, чтобы стать админом (скрытая функция)
+        show_admin_panel()
 
 def main(page: ft.Page):
     page.title = "подслушка"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 20
-    
-    # Состояние текущего пользователя
+
     user_data = {"name": "", "class": "", "is_admin": False}
 
-    # --- ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ ---
     def show_registration():
         page.clean()
         name_input = ft.TextField(label="Ваше имя", border_radius=15)
@@ -79,7 +75,6 @@ def main(page: ft.Page):
         msg_input = ft.TextField(label="Сообщение админу", multiline=True, min_lines=3)
         
         def send_report(e):
-            # В Android-приложении IP обычно эмулируется или берется из сетевого интерфейса
             report = {
                 "user": f"{user_data['name']} ({user_data['class']})",
                 "text": msg_input.value,
@@ -136,7 +131,6 @@ def main(page: ft.Page):
             nav_bar()
         )
 
-    # --- НИЖНЕЕ МЕНЮ ---
     def nav_bar():
         def on_nav_change(e):
             if e.control.selected_index == 0: show_posts_page()
