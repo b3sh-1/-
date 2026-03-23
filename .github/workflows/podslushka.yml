@@ -16,14 +16,12 @@ jobs:
         run: pip install flet
 
       - name: Prepare main.py
-        # Проверь, чтобы название файла совпадало (подслушка.py или Подслушка.py)
+        # Оставляем твой файл подслушка.py нетронутым
         run: cp podslushka.py main.py
 
-      - name: Build APK
-        # Параметр FLET_YES: "1" заставляет сборщик автоматически соглашаться со всем
-        env:
-          FLET_YES: "1"
-        run: flet build apk --product "Подслушка"
+      - name: Build APK (Silent Mode)
+        # Флаг --no-interactive запрещает роботу спрашивать "Да/Нет"
+        run: flet build apk --no-interactive
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
