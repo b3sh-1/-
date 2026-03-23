@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Set up Flutter
-        # Этот шаг установит Flutter и Android SDK правильно
+        # Этот шаг сам настроит Android SDK и Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -28,12 +28,13 @@ jobs:
         run: pip install flet
 
       - name: Prepare main.py
+        # Важно: если твой файл называется podslushka.py - исправь тут
         run: |
           git config --global --add safe.directory '*'
           cp podslushka.py main.py
 
       - name: Build APK
-        # Теперь среда готова, и Flet не будет зависать на вопросах
+        # Теперь среда готова, и Flet просто соберет файл
         run: flet build apk --product "Подслушка"
 
       - name: Upload APK
