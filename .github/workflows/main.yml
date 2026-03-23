@@ -6,21 +6,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-      
-      - name: Fix Git Ownership
-        run: git config --global --add safe.directory '*'
-          
+
       - name: Install Flet
         run: pip install flet
-        
+
       - name: Build APK
         run: flet build apk
-        
+
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: school-app-apk
+          name: my-app-apk
           path: build/apk/*.apk
