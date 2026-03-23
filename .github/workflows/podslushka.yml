@@ -5,9 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -17,14 +16,14 @@ jobs:
         run: pip install flet
 
       - name: Prepare main.py
-        # ВНИМАНИЕ: Если файл с большой буквы - исправь тут на Подслушка.py
-        run: |
-          git config --global --add safe.directory '*'
-          cp podslushka.py main.py
+        # Проверь, чтобы название файла совпадало (подслушка.py или Подслушка.py)
+        run: cp podslushka.py main.py
 
       - name: Build APK
-        # Добавляем --verbose, чтобы увидеть реальную ошибку, если упадет
-        run: flet build apk --verbose
+        # Параметр FLET_YES: "1" заставляет сборщик автоматически соглашаться со всем
+        env:
+          FLET_YES: "1"
+        run: flet build apk --product "Подслушка"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
