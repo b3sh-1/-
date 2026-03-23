@@ -17,8 +17,8 @@ jobs:
 
       - name: Build APK
         run: |
-          printf 'y\n' | flet build apk подслушка.py --product "Подслушка"
-        # Мы прямо сказали роботу: "Возьми файл подслушка.py и сделай из него приложение"
+          printf 'y\n' | flet build apk podslushka.py --product "Подслушка"
+        # Теперь робот ищет английское имя файла, но делает русское название приложения!
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
