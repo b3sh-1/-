@@ -13,22 +13,29 @@ jobs:
           python-version: '3.12'
 
       - name: Set up Java
-        # Это обязательный шаг для сборки Android приложений
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Set up Flutter
+        # Этот шаг установит все нужные инструменты для Android заранее
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
       - name: Install Flet
         run: pip install flet
 
       - name: Prepare main.py
-        run: cp podslushka.py main.py
+        # Проверь, что файл называется именно подслушка.py (с маленькой буквы)
+        run: |
+          git config --global --add safe.directory '*'
+          cp podslushka.py main.py
 
       - name: Build APK
-        # yes | заставляет робота соглашаться со всеми лицензиями Android
         run: |
-          yes | flet build apk --product "Подслушка"
+          flet build apk --product "Подслушка"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
