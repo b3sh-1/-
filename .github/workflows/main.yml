@@ -1,4 +1,4 @@
-name: Build APK
+name: Build AP
 on: [push]
 jobs:
   build:
@@ -13,7 +13,8 @@ jobs:
       - name: Install Flet
         run: pip install flet
       - name: Build APK
-        run: yes | flet build apk
+        run: |
+          flet build apk --product "подслушка"
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
