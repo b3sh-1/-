@@ -12,15 +12,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Java
+        # Это обязательный шаг для сборки Android приложений
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Install Flet
         run: pip install flet
 
       - name: Prepare main.py
-        # Робот копирует твой файл подслушка.py во временный main.py
         run: cp podslushka.py main.py
 
-      - name: Build APK (Auto Yes)
-        # Команда yes | заставляет робота отвечать "Да" на все вопросы
+      - name: Build APK
+        # yes | заставляет робота соглашаться со всеми лицензиями Android
         run: |
           yes | flet build apk --product "Подслушка"
 
