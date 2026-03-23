@@ -1,0 +1,27 @@
+name: Build APK
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Flet
+        run: pip install flet
+
+      - name: Build APK (Auto Confirm)
+        run: |
+          printf 'y\n' | flet build apk --product "Подслушка"
+        # Команда printf 'y\n' принудительно отправляет "Да" и нажатие Enter в консоль
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Podslushka-App
+          path: build/apk/*.apk
