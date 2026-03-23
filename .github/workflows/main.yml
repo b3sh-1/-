@@ -9,12 +9,14 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-      - name: Install Flet
+      - name: Fix Git
+        run: git config --global --add safe.directory '*'
+      - name: Install Tools
         run: pip install flet
       - name: Build APK
         run: flet build apk
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: school-app-apk
+          name: school-app
           path: build/apk/*.apk
