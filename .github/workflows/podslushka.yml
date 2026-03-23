@@ -18,24 +18,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Flutter
-        # Этот шаг установит все нужные инструменты для Android заранее
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
+      - name: Set up Android SDK
+        # Этот шаг автоматически примет все лицензии Google
+        uses: android-actions/setup-android@v3
 
       - name: Install Flet
         run: pip install flet
 
       - name: Prepare main.py
-        # Проверь, что файл называется именно подслушка.py (с маленькой буквы)
+        # Оставляем твой файл подслушка.py нетронутым
         run: |
           git config --global --add safe.directory '*'
           cp podslushka.py main.py
 
       - name: Build APK
-        run: |
-          flet build apk --product "Подслушка"
+        # Теперь среда готова, и Flet не будет зависать на вопросах
+        run: flet build apk --product "Подслушка"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
