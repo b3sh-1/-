@@ -15,10 +15,13 @@ jobs:
       - name: Install Flet
         run: pip install flet
 
+      - name: Prepare file for Robot
+        # Эта магия копирует твой файл в main.py только на время сборки
+        run: cp podslushka.py main.py
+
       - name: Build APK
         run: |
-          printf 'y\n' | flet build apk podslushka.py --product "Подслушка"
-        # Теперь робот ищет английское имя файла, но делает русское название приложения!
+          printf 'y\n' | flet build apk --product "Подслушка"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
